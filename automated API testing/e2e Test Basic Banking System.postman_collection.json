@@ -1,0 +1,1695 @@
+{
+	"info": {
+		"_postman_id": "ca40e64c-a924-4bd5-b9e5-0164532180fc",
+		"name": "e2e Test Basic Banking System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23098786"
+	},
+	"item": [
+		{
+			"name": "Identity-types",
+			"item": [
+				{
+					"name": "get all",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response is an object\", function () {\r",
+									"  pm.expect(pm.response.json(), \"response have to be object\").to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Object has status, message, and data properties\", function () {\r",
+									"    var response = pm.response.json();\r",
+									"    pm.expect(response).to.have.property('status');\r",
+									"    pm.expect(response).to.have.property('message');\r",
+									"    pm.expect(response).to.have.property('data');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each element in the data array has id and identity_type_name properties\", function () {\r",
+									"  pm.response.json().data.forEach(function(item) {\r",
+									"    pm.expect(item).to.have.property('id');\r",
+									"    pm.expect(item).to.have.property('identity_type_name');\r",
+									"  });\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.set(\"identity_id\", response.data[0].id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/identity-types",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"identity-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 201\", () => {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is an object\", function () {\r",
+									"  pm.expect(pm.response.json(), \"response have to be object\").to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Object has status, message, and data properties\", function () {\r",
+									"    pm.expect(response).to.have.property('status');\r",
+									"    pm.expect(response).to.have.property('message');\r",
+									"    pm.expect(response).to.have.property('data');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Identity type name in the data is 'management'\", function () {\r",
+									"    var responseData = pm.response.json();\r",
+									"    pm.expect(responseData.data.identity_type_name).to.be.a('string').and.to.equal('management');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "identity_type_name",
+									"value": "management",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/identity-type/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"identity-type",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response is an object\", function () {\r",
+									"  pm.expect(pm.response.json(), \"response have to be object\").to.be.an('object');\r",
+									"});\r",
+									"pm.test(\"Object has status, message, and data properties\", function () {\r",
+									"    var response = pm.response.json();\r",
+									"    pm.expect(response).to.have.property('status');\r",
+									"    pm.expect(response).to.have.property('message');\r",
+									"    pm.expect(response).to.have.property('data');\r",
+									"});\r",
+									"\r",
+									"// Assert that the identity_type_name of the data has a string value 'management'\r",
+									"pm.test(\"Identity type name in the data is 'management'\", function () {\r",
+									"    var responseData = pm.response.json();\r",
+									"    pm.expect(responseData.data.identity_type_name).to.be.a('string').and.to.equal('superuser');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "identity_type_name",
+									"value": "superuser",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/identity-type/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"identity-type",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 204 (No Content)\", function () {\r",
+									"  pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "identity_type_name",
+									"value": "superuser",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/identity-type/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"identity-type",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();",
+									"",
+									"pm.test(\"Response is an object\", function () {",
+									"  pm.expect(pm.response.json(), \"response have to be object\").to.be.an('object');",
+									"});",
+									"",
+									"pm.test(\"Object has status, message, and data properties\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response).to.have.property('status');",
+									"    pm.expect(response).to.have.property('message');",
+									"    pm.expect(response).to.have.property('data');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has id, name, email, and a profile with identity_number and address\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response).to.have.property('data');",
+									"    response.data.forEach(function(item) {",
+									"        pm.expect(item).to.have.property('id');",
+									"        pm.expect(item).to.have.property('name');",
+									"        pm.expect(item).to.have.property('email');",
+									"        ",
+									"        if (item.profile) {",
+									"            pm.expect(item.profile).to.have.property('identity_number');",
+									"            pm.expect(item.profile).to.have.property('address');",
+									"        }",
+									"    });",
+									"});",
+									"",
+									"pm.collectionVariables.set(\"user_id\", response.data[0].id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "Get specific data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response body has status, message, and data properties\", function () {",
+									"    var responseBody = pm.response.json();",
+									"    pm.expect(responseBody).to.have.property('status');",
+									"    pm.expect(responseBody).to.have.property('message');",
+									"    pm.expect(responseBody).to.have.property('data');",
+									"});",
+									"",
+									"pm.test(\"Response data contains specific values for email, name, address, and identity_type_name\", function () {",
+									"    var responseData = pm.response.json().data;",
+									"",
+									"    pm.expect(responseData.email).to.equal('abigail@gmail.com');",
+									"    pm.expect(responseData.name).to.equal('Abigail');",
+									"    pm.expect(responseData.address).to.equal('123 Main St');",
+									"    pm.expect(responseData.identity_type_name).to.equal('User');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"{{user_id}}"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "Post data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.response.to.have.status(201)",
+									"});",
+									"",
+									"pm.test(\"Response has the properties status, message, and data\", function () {",
+									"    var responseData = pm.response.json();",
+									"    pm.expect(responseData).to.have.property('status');",
+									"    pm.expect(responseData).to.have.property('message');",
+									"    pm.expect(responseData).to.have.property('data');",
+									"});",
+									"",
+									"pm.test(\"Response data has the properties id, name, email, and profile with identity_number and address\", function () {",
+									"    var responseData = pm.response.json().data;",
+									"    pm.expect(responseData).to.have.property('id');",
+									"    pm.expect(responseData).to.have.property('name');",
+									"    pm.expect(responseData).to.have.property('email');",
+									"    pm.expect(responseData).to.have.property('profile').that.has.property('identity_number');",
+									"    pm.expect(responseData).to.have.property('profile').that.has.property('address');",
+									"});",
+									"",
+									"pm.test(\"Values of id, name, email, and profile properties are not empty\", function () {",
+									"    var responseData = pm.response.json().data;",
+									"    pm.expect(responseData.id).to.not.be.empty;",
+									"    pm.expect(responseData.name).to.not.be.empty;",
+									"    pm.expect(responseData.email).to.not.be.empty;",
+									"    pm.expect(responseData.profile.identity_number).to.not.be.empty;",
+									"    pm.expect(responseData.profile.address).to.not.be.empty;",
+									"});",
+									"",
+									"var responseData = pm.response.json().data;",
+									"pm.collectionVariables.set(\"temp_user_id\", responseData.id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "kevin dylan prayudi",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "kevindylan@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "identity_type_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "identity_number",
+									"value": "0987654321",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "los angles",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/user",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "Update data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful PUT request\", function () {",
+									"    pm.response.to.have.status(202)",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has status, message, and data properties\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('status');",
+									"    pm.expect(jsonData).to.have.property('message');",
+									"    pm.expect(jsonData).to.have.property('data');",
+									"});",
+									"",
+									"pm.test(\"Data has email property and it is not empty\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data).to.have.property('email').and.to.not.be.empty;",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "kevindylan@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/user/{{temp_user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"{{temp_user_id}}"
+							]
+						},
+						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful DELETE request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/{{temp_user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"{{temp_user_id}}"
+							]
+						},
+						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transaction-types",
+			"item": [
+				{
+					"name": "Get data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response must have status, message, and data\", function () {",
+									"    var responseData = pm.response.json();",
+									"    pm.expect(responseData).to.have.property('status');",
+									"    pm.expect(responseData).to.have.property('message');",
+									"    pm.expect(responseData).to.have.property('data');",
+									"});",
+									"",
+									"pm.test(\"Data must have id and transaction_type_name properties which are not null\", function () {",
+									"    var responseData = pm.response.json().data;",
+									"    responseData.forEach(function(data) {",
+									"        pm.expect(data).to.have.property('id').and.not.to.be.null;",
+									"        pm.expect(data).to.have.property('transaction_type_name').and.not.to.be.null;",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/transaction-types",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transaction-types"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "Post data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.response.to.have.status(201)",
+									"});",
+									"",
+									"pm.test(\"Response contains status, message, and data properties\", function () {",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData).to.have.property('status');",
+									"    pm.expect(responseData).to.have.property('message');",
+									"    pm.expect(responseData).to.have.property('data');",
+									"});",
+									"",
+									"pm.test(\"Data property has a transaction_type_name with value 'loan'\", function () {",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData.data).to.have.property('transaction_type_name', 'loan');",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "transaction_type_name",
+									"value": "loan",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/transaction-type",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transaction-type"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "Update data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful PUT request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([202]);",
+									"});",
+									"",
+									"pm.test(\"Response contains status, message, and data properties\", function () {",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData).to.have.property('status');",
+									"    pm.expect(responseData).to.have.property('message');",
+									"    pm.expect(responseData).to.have.property('data');",
+									"});",
+									"",
+									"pm.test(\"Data property has a transaction_type_name with value 'loan'\", function () {",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData.data).to.have.property('transaction_type_name', 'credit');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "transaction_type_name",
+									"value": "credit",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/transaction-type/4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transaction-type",
+								"4"
+							]
+						},
+						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful DELETE request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/transaction-type/4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transaction-type",
+								"4"
+							]
+						},
+						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profiles",
+			"item": [
+				{
+					"name": "Get data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response body has a valid schema\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      status: { type: \"string\" },",
+									"      message: { type: \"string\" },",
+									"      data: {",
+									"        type: \"array\",",
+									"        items: {",
+									"          type: \"object\",",
+									"          properties: {",
+									"            identity_number: { type: \"string\" },",
+									"            address: { type: \"string\" }",
+									"          },",
+									"          required: [\"identity_number\", \"address\"]",
+									"        }",
+									"      }",
+									"    },",
+									"    required: [\"status\", \"message\", \"data\"]",
+									"  };",
+									"",
+									"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/profiles/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"profiles",
+								""
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "Get specific data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has the required fields - status, message, and data\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.status).to.exist;",
+									"    pm.expect(responseData.message).to.exist;",
+									"    pm.expect(responseData.data).to.exist;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Identity number is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.data.identity_number).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Identity number should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Address is a non-empty string\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.data.address).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Address should not be empty\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/profile/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"profile",
+								"1"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Accounts",
+			"item": [
+				{
+					"name": "Get data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.data).to.be.an('array');",
+									"    ",
+									"    responseData.data.forEach(function(account) {",
+									"        pm.expect(account).to.have.property('id');",
+									"        pm.expect(account).to.have.property('bank_name');",
+									"        pm.expect(account).to.have.property('bank_account_number');",
+									"        pm.expect(account).to.have.property('balance');",
+									"        pm.expect(account).to.have.property('created_at');",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Id is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData.data).to.be.an('array');",
+									"    responseData.data.forEach(function(item) {",
+									"        pm.expect(item.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Id should be a non-empty string\");",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Bank account number is in a valid format\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.data).to.be.an('array');",
+									"    ",
+									"    responseData.data.forEach(function(account) {",
+									"        pm.expect(account.bank_account_number).is.not.empty;",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Balance is a non-negative number\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.data).to.be.an('array');",
+									"    ",
+									"    responseData.data.forEach(function(account) {",
+									"        pm.expect(account.balance).to.be.a('number').and.to.be.at.least(0);",
+									"    });",
+									"});",
+									"",
+									"pm.collectionVariables.set(\"account_id\", pm.response.json().data[0].id);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/accounts",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"accounts"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "Get specific data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/account/{{account_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"account",
+								"{{account_id}}"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "Post data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      status: { type: \"string\" },",
+									"      message: { type: \"string\" },",
+									"      data: {",
+									"        type: \"object\",",
+									"        properties: {",
+									"          id: { type: \"string\" },",
+									"          bank_name: { type: \"string\" },",
+									"          bank_account_number: { type: \"string\" },",
+									"          balance: { type: \"number\" },",
+									"          created_at: { type: \"string\" },",
+									"        },",
+									"        required: [\"id\", \"bank_name\", \"bank_account_number\", \"balance\", \"created_at\"],",
+									"      },",
+									"    },",
+									"    required: [\"status\", \"message\", \"data\"],",
+									"  };",
+									"",
+									"  var response = pm.response.json();",
+									"  pm.expect(tv4.validate(response, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.collectionVariables.set(\"temp_account_id\", pm.response.json().data.id)",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_id",
+									"value": "{{user_id}}",
+									"type": "text"
+								},
+								{
+									"key": "bank_name",
+									"value": "b",
+									"type": "text"
+								},
+								{
+									"key": "bank_account_number",
+									"value": "54321",
+									"type": "text"
+								},
+								{
+									"key": "balance",
+									"value": "1000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/account",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"account"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "Update data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      status: { type: \"string\" },",
+									"      message: { type: \"string\" },",
+									"      data: {",
+									"        type: \"object\",",
+									"        properties: {",
+									"          id: { type: \"string\" },",
+									"          bank_name: { type: \"string\" },",
+									"          bank_account_number: { type: \"string\" },",
+									"          balance: { type: \"number\" },",
+									"          created_at: { type: \"string\" }",
+									"        },",
+									"        required: [\"id\", \"bank_name\", \"bank_account_number\", \"balance\", \"created_at\"]",
+									"      }",
+									"    },",
+									"    required: [\"status\", \"message\", \"data\"]",
+									"  };",
+									"",
+									"  var response = pm.response.json();",
+									"  pm.expect(tv4.validate(response, schema)).to.be.true;",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "bank_name",
+									"value": "1234",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/account/{{temp_account_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"account",
+								"{{temp_account_id}}"
+							]
+						},
+						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful DELETE request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/account/{{temp_account_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"account",
+								"{{temp_account_id}}"
+							]
+						},
+						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Post data deposit",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"pm.test(\"Response schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      status: { type: \"string\" },",
+									"      message: { type: \"string\" },",
+									"      data: {",
+									"        type: \"array\",",
+									"        minItems: 2,",
+									"        items: {",
+									"          type: \"object\"",
+									"        }",
+									"      }",
+									"    },",
+									"    required: [\"status\", \"message\", \"data\"]",
+									"  };",
+									"",
+									"  var response = pm.response.json();",
+									"  pm.expect(tv4.validate(response, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.collectionVariables.set(\"deposit_id\", pm.response.json().data[0].id)",
+									"pm.collectionVariables.set(\"deposit_account_id\", pm.response.json().data[0].destination_account_id)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "destination_account_id",
+									"value": "27f8e130-79a4-4678-a540-a364692ed530",
+									"type": "text"
+								},
+								{
+									"key": "transaction_type_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "amount",
+									"value": "5000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/transactions/deposit",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"deposit"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "Post data withdraw",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"pm.test(\"Response schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      status: { type: \"string\" },",
+									"      message: { type: \"string\" },",
+									"      data: {",
+									"        type: \"object\",",
+									"        minItems: 2,",
+									"        items: {",
+									"          type: \"object\"",
+									"        }",
+									"      }",
+									"    },",
+									"    required: [\"status\", \"message\", \"data\"]",
+									"  };",
+									"",
+									"  var response = pm.response.json();",
+									"  pm.expect(tv4.validate(response, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.collectionVariables.set(\"withdraw_id\", pm.response.json().data.transaction.id)",
+									"pm.collectionVariables.set(\"withdraw_account_id\", pm.response.json().data.transaction.source_account_id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "source_account_id",
+									"value": "27f8e130-79a4-4678-a540-a364692ed530",
+									"type": "text"
+								},
+								{
+									"key": "transaction_type_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "amount",
+									"value": "1000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/transactions/withdraw",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"withdraw"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "Post data transfer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"pm.test(\"Response schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      status: { type: \"string\" },",
+									"      message: { type: \"string\" },",
+									"      data: {",
+									"        type: \"object\",",
+									"        minItems: 2,",
+									"        items: {",
+									"          type: \"object\"",
+									"        }",
+									"      }",
+									"    },",
+									"    required: [\"status\", \"message\", \"data\"]",
+									"  };",
+									"",
+									"  var response = pm.response.json();",
+									"  pm.expect(tv4.validate(response, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.collectionVariables.set(\"transfer_id\", pm.response.json().data.transaction.id)",
+									"pm.collectionVariables.set(\"recepient\", pm.response.json().data.recepient.id)",
+									"pm.collectionVariables.set(\"sender\", pm.response.json().data.sender.id)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "source_account_id",
+									"value": "27f8e130-79a4-4678-a540-a364692ed530",
+									"type": "text"
+								},
+								{
+									"key": "destination_account_id",
+									"value": "d24d869b-5de4-4960-8ea6-2908ea20c2f4",
+									"type": "text"
+								},
+								{
+									"key": "transaction_type_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "amount",
+									"value": "1000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/transactions/transfer",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"transfer"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "Get data deposit by user_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/transactions/deposits/{{deposit_account_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"deposits",
+								"{{deposit_account_id}}"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "Get data deposit by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/transactions/deposit/{{deposit_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"deposit",
+								"{{deposit_id}}"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "Get data withdraw by user_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/transactions/withdraws/{{withdraw_account_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"withdraws",
+								"{{withdraw_account_id}}"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "Get data withdraw by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/transactions/withdraw/{{withdraw_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"withdraw",
+								"{{withdraw_id}}"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "Get data transfer by sender",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/transactions/transfers/sender/{{sender}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"transfers",
+								"sender",
+								"{{sender}}"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "Get data transfer by recepient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/transactions/transfers/recepient/{{recepient}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"transfers",
+								"recepient",
+								"{{recepient}}"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "Get data transfer by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/transactions/transfer/{{transfer_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"transfer",
+								"{{transfer_id}}"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "key",
+				"value": "api-key",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "{{apiKey}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "localhost:3000/api/v1"
+		}
+	]
+}

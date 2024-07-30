@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["relationJoins", "views"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id String @id @default(uuid())
+  name String @db.VarChar(50)
+  email String @db.VarChar(50) @unique
+  password String
+  profile Profiles?
+  account Accounts[]
+}
+
+model Identity_Types {
+  id BigInt @db.BigInt @id @default(autoincrement())
+  identity_type_name String @db.VarChar(50) @unique
+  profile Profiles[]
+}
+
+model Profiles {
+  id BigInt @db.BigInt @id @default(autoincrement())
+  user_id String @unique
+  identity_type_id BigInt @db.BigInt
+  identity_number String @db.VarChar(50)
+  address String
+  user Users @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  identity_type Identity_Types @relation(fields: [identity_type_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+}
+
+model Accounts {
+  id String @id @default(uuid())
+  user Users @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user_id String
+  bank_name String @db.VarChar(50)
+  bank_account_number String @db.VarChar(50)
+  balance Int
+  created_at DateTime? @db.Timestamptz() @default(now())
+  source Transactions[] @relation(name: "source")
+  destination Transactions[] @relation(name: "destination")
+}
+
+model Transaction_Types {
+  id BigInt @db.BigInt @id @default(autoincrement())
+  transaction_type_name String @db.VarChar(50) @unique
+  transaction Transactions[]
+}
+
+model Transactions {
+  id String @id @default(uuid())
+  source_account_id String?
+  destination_account_id String?
+  transaction_type_id BigInt @db.BigInt
+  amount Int
+  date DateTime? @db.Timestamptz() @default(now())
+  source Accounts? @relation(fields: [source_account_id], references: [id], name: "source", onDelete: Cascade, onUpdate: Cascade)
+  destination Accounts? @relation(fields: [destination_account_id], references: [id], name: "destination", onDelete: Cascade, onUpdate: Cascade)
+  transaction_type Transaction_Types @relation(fields: [transaction_type_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+}
+
+view UserInfo {
+  id String @id
+  email String
+  name String
+  address String
+  identity_type_name String
+}
+
+view senders {
+  id String @id
+  email String
+  name String
+  source_account_id String
+  bank_name String
+  amount Int
+  date DateTime @db.Timestamptz()
+}
+
+view recepients {
+  id String @id
+  email String
+  name String
+  destination_account_id String
+  bank_name String
+  amount Int
+  date DateTime @db.Timestamptz()
+}
