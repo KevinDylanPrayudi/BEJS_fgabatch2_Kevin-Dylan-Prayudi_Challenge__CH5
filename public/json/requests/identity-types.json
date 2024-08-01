@@ -1,0 +1,22 @@
+{
+    "post:identity-type": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["identity_type_name"],
+        "properties": {
+            "identity_type_name": {
+                "type": "string"
+            }
+        }
+    },
+    "put:identity-type": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["identity_type_name"],
+        "properties": {
+            "identity_type_name": {
+                "type": "string"
+            }
+        }
+    }
+}

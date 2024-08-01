@@ -4,6 +4,30 @@ const { validator} = require('./validator');
 const model = require('./model');
 
 function main(db) {
+
+    /**
+     * 
+     * @swagger
+     * /identity-types:
+     *   get:
+     *     security:
+     *       - bearerAuth: []
+     *     tags:
+     *      - Identity Types
+     *     responses:
+     *       200:
+     *         description: Returns a mysterious string
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: 'http://localhost:3000/public/json/responses/identity-types.json#/get:identity-types'
+     *       401:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/responses/UnauthorizedError'
+     */
+    
     async function get(req, res) {
         let result = await model(db).get();
 
@@ -18,6 +42,41 @@ function main(db) {
             data: result
         });
     }
+
+    /**
+     * @swagger
+     * /identity-type:
+     *   post:
+     *     security:
+     *       - bearerAuth: []
+     *     tags:
+     *      - Identity Types
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: 'http://localhost:3000/public/json/requests/identity-types.json#/post:identity-type'
+     *     responses:
+     *       201:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: 'http://localhost:3000/public/json/responses/identity-types.json#/post:identity-type'
+     *       400:
+     *         description: Please check schema tab for more details on error
+     *         content:
+     *           application/json:
+     *             schema:
+     *               oneOf:
+     *                 - $ref: 'http://localhost:3000/public/json/responses/identity-types.json#/post:identity-type:validation'
+     *                 - $ref: 'http://localhost:3000/public/json/responses/identity-types.json#/post:identity-type:bad-request'
+     *       401:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/responses/UnauthorizedError'
+     */
 
     async function post(req, res) {
         try {
@@ -53,6 +112,45 @@ function main(db) {
         }
     }
 
+    /**
+     * @swagger
+     * /identity-type/{id}:
+     *   put:
+     *     security:
+     *       - bearerAuth: []
+     *     tags:
+     *      - Identity Types
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         required: true
+     *         schema:
+     *           type: string
+     *         description: The identity type id
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: 'http://localhost:3000/public/json/requests/identity-types.json#/put:identity-type'
+     *     responses:
+     *       202:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: 'http://localhost:3000/public/json/responses/identity-types.json#/post:identity-type'
+     *       400:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: 'http://localhost:3000/public/json/responses/identity-types.json#/post:identity-type:bad-request'
+     *       401:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/responses/UnauthorizedError'
+     */
+    
     async function put(req, res) {
         try {
             await validator().params().validateAsync({ id:req.params.id });
@@ -85,6 +183,38 @@ function main(db) {
         }
     }
 
+    /**
+     * 
+     * @swagger
+     * /identity-type/{id}:
+     *   delete:
+     *     security:
+     *       - bearerAuth: []
+     *     tags:
+     *      - Identity Types
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         required: true
+     *         schema:
+     *           type: string
+     *         description: The identity type id
+     *     responses:
+     *       204:
+     *         description: User deleted successfully
+     *       400:
+     *         description: Please check schema tab for more details on this error
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: 'http://localhost:3000/public/json/responses/identity-types.json#/delete:identity-type:bad-request'
+     *       401:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/responses/UnauthorizedError'
+     */
+    
     async function remove(req, res) {
         try {
             await validator().params().validateAsync({ id:req.params.id })

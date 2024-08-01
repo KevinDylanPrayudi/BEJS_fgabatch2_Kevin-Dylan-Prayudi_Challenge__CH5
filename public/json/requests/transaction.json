@@ -1,0 +1,72 @@
+{
+    "post:deposit": {
+        "type": "object",
+        "description": "A transaction data.",
+        "additionalProperties": false,
+        "required": [
+            "destination_account_id",
+            "transaction_type_id",
+            "amount"
+        ],
+        "properties": {
+            "destination_account_id": {
+                "type": "string"
+            },
+            "transaction_type_id": {
+                "type": "number",
+                "default": 1
+            },
+            "amount": {
+                "type": "number"
+            }
+        }
+    },
+    "post:transfer": {
+        "type": "object",
+        "description": "A transaction data.",
+        "additionalProperties": false,
+        "required": [
+            "source_account_id",
+            "destination_account_id",
+            "transaction_type_id",
+            "amount"
+        ],
+        "properties": {
+            "source_account_id": {
+                "type": "string"
+            },
+            "destination_account_id": {
+                "type": "string"
+            },
+            "transaction_type_id": {
+                "type": "number",
+                "default": 3
+            },
+            "amount": {
+                "type": "number"
+            }
+        }
+    },
+    "post:withdraw": {
+        "type": "object",
+        "description": "A transaction data.",
+        "additionalProperties": false,
+        "required": [
+            "source_account_id",
+            "transaction_type_id",
+            "amount"
+        ],
+        "properties": {
+            "source_account_id": {
+                "type": "string"
+            },
+            "transaction_type_id": {
+                "type": "number",
+                "default": 2
+            },
+            "amount": {
+                "type": "number"
+            }
+        }
+    }
+}

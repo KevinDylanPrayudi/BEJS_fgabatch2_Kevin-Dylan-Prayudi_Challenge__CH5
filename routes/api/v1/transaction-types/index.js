@@ -4,6 +4,29 @@ const { validator } = require('./validator');
 const model = require('./model');
 
 function main(db) {
+    
+    /**
+     * 
+     * @swagger
+     * /transaction-types:
+     *   get:
+     *     security:
+     *       - bearerAuth: []
+     *     tags:
+     *      - Transaction Types
+     *     responses:
+     *       200:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: 'http://localhost:3000/public/json/responses/transaction-types.json#/get:transaction-types'
+     *       401:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/responses/UnauthorizedError'
+     */
+    
     async function get(req, res) {
         let result = await model(db).get();
 
@@ -18,6 +41,42 @@ function main(db) {
             data: result
         });
     }
+    
+    /**
+     * 
+     * @swagger
+     * /transaction-type:
+     *   post:
+     *     security:
+     *       - bearerAuth: []
+     *     tags:
+     *      - Transaction Types
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: 'http://localhost:3000/public/json/requests/transaction-types.json#/post:transaction-type'
+     *     responses:
+     *       201:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: 'http://localhost:3000/public/json/responses/transaction-types.json#/post:transaction-type'
+     *       400:
+     *         description: Please check schema tab for kind of error
+     *         content:
+     *           application/json:
+     *             schema:
+     *               oneOf:
+     *                 - $ref: 'http://localhost:3000/public/json/responses/transaction-types.json#/post:transaction-type:validation'
+     *                 - $ref: 'http://localhost:3000/public/json/responses/transaction-types.json#/post:transaction-type:bad-request'
+     *       401:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/responses/UnauthorizedError'
+     */
     
     async function post(req, res) {
         try {
@@ -53,6 +112,47 @@ function main(db) {
         }
     }
     
+    /**
+     *
+     * @swagger
+     * /transaction-type/{id}:
+     *   put:
+     *     security:
+     *       - bearerAuth: []
+     *     tags:
+     *      - Transaction Types
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         schema:
+     *           type: string
+     *         required: true
+     *         description: ID of transaction type
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: 'http://localhost:3000/public/json/requests/transaction-types.json#/post:transaction-type'
+     *     responses:
+     *       202:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: 'http://localhost:3000/public/json/responses/transaction-types.json#/post:transaction-type'
+     *       400:
+     *         description: Please check schema tab for kind of error
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: 'http://localhost:3000/public/json/responses/transaction-types.json#/post:transaction-type:bad-request'
+     *       401:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/responses/UnauthorizedError'
+     */
+    
     async function put(req, res) {
         try {
             await validator().params().validateAsync({ id:req.params.id })
@@ -87,6 +187,38 @@ function main(db) {
             })
         }
     }
+
+    /**
+     *
+     * @swagger
+     * /transaction-type/{id}:
+     *   delete:
+     *     security:
+     *       - bearerAuth: []
+     *     tags:
+     *      - Transaction Types
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         schema:
+     *           type: string
+     *         required: true
+     *         description: ID of transaction type
+     *     responses:
+     *       204:
+     *         description: Transaction type deleted successfully
+     *       400:
+     *         description: Please check schema tab for kind of error
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: 'http://localhost:3000/public/json/responses/transaction-types.json#/post:transaction-type'
+     *       401:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/responses/UnauthorizedError'
+     */
     
     async function remove(req, res) {
         try {

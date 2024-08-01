@@ -5,10 +5,42 @@ const model = require('./models/deposit');
 
 function main(db) {
     
+    /**
+     * @swagger
+     * /transactions/deposits/{id}:
+     *   get:
+     *     summary: Get an transactions by account id
+     *     security:    
+     *       - bearerAuth: []
+     *     tags: 
+     *       - Transactions
+     *     parameters:
+     *      - in: path
+     *        name: id
+     *        required: true
+     *        description: account id
+     *        schema:
+     *          type: string
+     *     responses:
+     *      200:
+     *         description: Get an transactions. please check the Schema tab for more details kind of response
+     *         content:
+     *           application/json:
+     *             schema:
+     *               oneOf:
+     *               - $ref: 'http://localhost:3000/public/json/responses/transaction.json#/get-all:deposits'
+     *               - $ref: 'http://localhost:3000/public/json/responses/transaction.json#/get:not-found'
+     *      401:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/responses/UnauthorizedError'
+     */
     async function get(req, res) {
         let result = await model(db).get(req.params.id);
 
-        if (result === null) {
+
+        if (result.length === 0) {
             result = {
                 message: 'Data transaction is not found'
             }
@@ -21,6 +53,41 @@ function main(db) {
         });
     }
 
+    /**
+     * @swagger
+     * /transactions/deposit:
+     *   post:
+     *     security:    
+     *       - bearerAuth: []
+     *     tags: 
+     *       - Transactions
+     *     requestBody:
+     *      required: true
+     *      content:
+     *        application/json:
+     *          schema:
+     *            $ref: 'http://localhost:3000/public/json/requests/transaction.json#/post:deposit'
+     *     responses:
+     *      201:
+     *         description: Get an account. please check the Schema tab for more details kind of response
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: 'http://localhost:3000/public/json/responses/transaction.json#/get-all:deposits'
+     *      400:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               oneOf:
+     *                 - $ref: 'http://localhost:3000/public/json/responses/transaction.json#/post:deposit:validation'
+     *                 - $ref: 'http://localhost:3000/public/json/responses/transaction.json#/post:deposit:bad-request'
+     *      401:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/responses/UnauthorizedError'
+     */
+    
     async function post(req, res) {
         try {
             await validator().deposit().validateAsync(req.body)
@@ -56,6 +123,38 @@ function main(db) {
         }
     }
 
+    /**
+     * @swagger
+     * /transactions/deposit/{id}:
+     *   get:
+     *     summary: Get an transactions by transaction id
+     *     security:    
+     *       - bearerAuth: []
+     *     tags: 
+     *       - Transactions
+     *     parameters:
+     *      - in: path
+     *        name: id
+     *        required: true
+     *        description: transaction id
+     *        schema:
+     *          type: string
+     *     responses:
+     *      200:
+     *         description: Get an account. please check the Schema tab for more details kind of response
+     *         content:
+     *           application/json:
+     *             schema:
+     *               oneOf:
+     *               - $ref: 'http://localhost:3000/public/json/responses/transaction.json#/get-one:deposit'
+     *               - $ref: 'http://localhost:3000/public/json/responses/transaction.json#/get:not-found'
+     *      401:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/responses/UnauthorizedError'
+     */
+    
     async function getOne(req, res) {
         let result = await model(db).getOne(req.params.id);
         

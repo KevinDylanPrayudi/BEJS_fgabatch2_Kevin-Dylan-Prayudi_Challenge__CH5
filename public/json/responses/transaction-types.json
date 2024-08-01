@@ -1,0 +1,97 @@
+{
+    "get:transaction-types": {
+        "type": "object",
+        "description": "List of transaction types data",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "transaction_type_name": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "post:transaction-type": {
+        "type": "object",
+        "description": "A transaction type data.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "transaction_type_name": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "post:transaction-type:validation": {
+        "type": "object",
+        "description": "Validation response.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string",
+                "description": "kind of error validation, as following\n\n1. `transaction_type_name` is required"
+            }
+        }
+    },
+    "post:transaction-type:bad-request": {
+        "type": "object",
+        "description": "Bad request response.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string",
+                "description": "kind of bad request, as follow:\n\n1. `transaction_type_name` already exists\n\n2. Record to update not found."
+            }
+        }
+    },
+    "delete:transaction-type:bad-request": {
+        "type": "object",
+        "description": "Bad request response.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string",
+                "description": "kind of bad request, as follow:\n\n1. Record to delete not found.\n\n2. The data is being used by another table"
+            }
+        }
+    }
+}

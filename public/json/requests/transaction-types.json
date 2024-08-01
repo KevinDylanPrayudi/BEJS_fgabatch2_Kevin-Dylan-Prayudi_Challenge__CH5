@@ -1,0 +1,15 @@
+{
+    "post:transaction-type": {
+        "type": "object",
+        "description": "A transaction type data.",
+        "additionalProperties": false,
+        "required": [
+            "transaction_type_name"
+        ],
+        "properties": {
+            "transaction_type_name": {
+                "type": "string"
+            }
+        }
+    }
+}

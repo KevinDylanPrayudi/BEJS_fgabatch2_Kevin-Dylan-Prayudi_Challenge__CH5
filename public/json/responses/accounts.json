@@ -1,0 +1,164 @@
+{
+    "get-all": {
+        "type": "object",
+        "description": "A user account.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "bank_name": {
+                            "type": "string"
+                        },
+                        "bank_account_number": {
+                            "type": "string"
+                        },
+                        "balance": {
+                            "type": "number"
+                        },
+                        "created_at": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "post": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "user_id": {
+                        "type": "string"
+                    },
+                    "bank_name": {
+                        "type": "string"
+                    },
+                    "bank_account_number": {
+                        "type": "string"
+                    },
+                    "balance": {
+                        "type": "number"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            }
+        }
+    },
+    "put": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "user_id": {
+                        "type": "string"
+                    },
+                    "bank_name": {
+                        "type": "string"
+                    },
+                    "bank_account_number": {
+                        "type": "string"
+                    },
+                    "balance": {
+                        "type": "number"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            }
+        }
+    },
+    "get-one": {
+        "type": "object",
+        "description": "A user account.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "bank_name": {
+                        "type": "string"
+                    },
+                    "bank_account_number": {
+                        "type": "string"
+                    },
+                    "balance": {
+                        "type": "number"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            }
+        }
+    },
+    "get:not-found": {
+        "type": "object",
+        "description": "User not found.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

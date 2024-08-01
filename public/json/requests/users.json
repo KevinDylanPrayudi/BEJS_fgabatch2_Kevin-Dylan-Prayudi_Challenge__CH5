@@ -1,0 +1,54 @@
+{
+    "post" : {
+        "type": "object",
+        "description": "Create a new user account.",
+        "required": ["name", "email", "password", "identity_type_id", "identity_number", "address"],
+        "additionalProperties": false,
+        "properties": {
+            "name": {
+                "type": "string"
+            },
+            "email": {
+                "type": "string"
+            },
+            "password": {
+                "type": "string"
+            },
+            "identity_type_id": {
+                "type": "integer"
+            },
+            "identity_number": {
+                "type": "string"
+            },
+            "address": {
+                "type": "string"
+            }
+        }
+    },
+    "put" : {
+        "type": "object",
+        "description": "Update a user account.",
+        "required": ["name", "email", "password", "identity_type_id", "identity_number", "address"],
+        "additionalProperties": false,
+        "properties": {
+            "name": {
+                "type": "string"
+            },
+            "email": {
+                "type": "string"
+            },
+            "password": {
+                "type": "string"
+            },
+            "identity_type_id": {
+                "type": "integer"
+            },
+            "identity_number": {
+                "type": "string"
+            },
+            "address": {
+                "type": "string"
+            }
+        }
+    }
+}

@@ -1,0 +1,547 @@
+{
+    "get-all:deposits": {
+        "type": "object",
+        "description": "A transaction data.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "account_id": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "number"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            }
+        }
+    },
+    "get:not-found": {
+        "type": "object",
+        "description": "transaction not found.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "Data transaction is not found"
+                    }
+                }
+            }
+        }
+    },
+    "post:deposit:validation": {
+        "type": "object",
+        "description": "Validation response.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string",
+                "example": "\"amount\" is required",
+                "description": "kind of error validation, as following\n\n1. `destination_account_id` is required\n2. `transaction_type_id` is required\n3. `amount` is required"
+            }
+        }
+    },
+    "post:deposit:bad-request": {
+        "type": "object",
+        "description": "bad request response.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string",
+                "example": "The source_account_id doesn't exists in other table."
+            }
+        }
+    },
+    "get-one:deposit": {
+        "type": "object",
+        "description": "A transaction data.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "number"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "transaction_type": {
+                        "type": "object",
+                        "properties": {
+                            "transaction_type_name": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "get:transfers:sender": {
+        "type": "object",
+        "description": "A transaction data.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "source_account_id": {
+                        "type": "string"
+                    },
+                    "bank_name": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "number"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "transaction_type": {
+                        "type": "object",
+                        "properties": {
+                            "transaction_type_name": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "get:transfers:recepient": {
+        "type": "object",
+        "description": "A transaction data.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "destination_account_id": {
+                        "type": "string"
+                    },
+                    "bank_name": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "number"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            }
+        }
+    },
+    "get:transfer": {
+        "type": "object",
+        "description": "A transaction data.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "number"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "source_account_id": {
+                        "type": "string"
+                    },
+                    "destination_account_id": {
+                        "type": "string"
+                    },
+                    "transaction_type": {
+                        "type": "object",
+                        "properties": {
+                            "transaction_type_name": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "post:transfer": {
+        "type": "object",
+        "description": "A transaction data.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "sender": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "user_id": {
+                                "type": "string"
+                            },
+                            "bank_name": {
+                                "type": "string"
+                            },
+                            "bank_account_number": {
+                                "type": "string"
+                            },
+                            "balance": {
+                                "type": "number"
+                            },
+                            "created_at": {
+                                "type": "string",
+                                "format": "date-time"
+                            }
+                        }
+                    },
+                    "recepient": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "amount": {
+                                "type": "number"
+                            },
+                            "date": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "source_account_id": {
+                                "type": "string"
+                            },
+                            "transaction_type": {
+                                "type": "object",
+                                "properties": {
+                                    "transaction_type_name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "post:transfer:validation": {
+        "type": "object",
+        "description": "Validation response.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "kind of error validation, as following\n\n1. `source_account_id` is required\n\n2. `destination_account_id` is required\n\n3. `amount` is required\n\n4. `amount` must be greater than 0\n\n5. `amount` must be less than or equal to `balance`"
+                    }
+                }
+            }
+        }
+    },
+    "post:transfer:bad-request": {
+        "type": "object",
+        "description": "Bad request response.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string",
+                "description": "kind of bad request, as follow:\n\n1. `source_account_id` doesn't exists in another table\n\n2. `destination_account_id` doesn't exists in another table"
+            }
+        }
+    },
+    "get:withdraws": {
+        "type": "object",
+        "description": "A transaction data.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "amount": {
+                            "type": "number"
+                        },
+                        "date": {
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "source_account_id": {
+                            "type": "string"
+                        },
+                        "transaction_type": {
+                            "type": "object",
+                            "properties": {
+                                "transaction_type_name": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "get:withdraw": {
+        "type": "object",
+        "description": "A transaction data.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "number"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "source_account_id": {
+                        "type": "string"
+                    },
+                    "transaction_type": {
+                        "type": "object",
+                        "properties": {
+                            "transaction_type_name": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "post:withdraw": {
+        "type": "object",
+        "description": "A transaction data.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "account": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "user_id": {
+                                "type": "string"
+                            },
+                            "bank_name": {
+                                "type": "string"
+                            },
+                            "bank_account_number": {
+                                "type": "string"
+                            },
+                            "balance": {
+                                "type": "number"
+                            },
+                            "created_at": {
+                                "type": "string",
+                                "format": "date-time"
+                            }
+                        }
+                    },
+                    "transaction": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "amount": {
+                                "type": "number"
+                            },
+                            "date": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "source_account_id": {
+                                "type": "string"
+                            },
+                            "transaction_type": {
+                                "type": "object",
+                                "properties": {
+                                    "transaction_type_name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "post:withdraw:validation": {
+        "type": "object",
+        "description": "Bad request response.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string",
+                "description": "kind of error valdiation: as follow:\n\n1. `source_account_id` is required\n\n2. `source_account_id` is required\n\n3. `amount` is required\n\n4. `amount` must be greater than 0"
+            }
+        }
+    },
+    "post:withdraw:bad-request": {
+        "type": "object",
+        "description": "Bad request response.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string",
+                "description": "kind of bad request, as follow:\n\n1. `source_account_id` doesn't exists in another table\n\n2. `transaction_type_id` doesn't exists in another table"
+            }
+        }
+    }
+}

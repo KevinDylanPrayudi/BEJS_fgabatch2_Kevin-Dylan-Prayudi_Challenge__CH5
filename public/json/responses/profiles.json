@@ -1,0 +1,55 @@
+{
+    "get-all": {
+        "type": "object",
+        "description": "A user account.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "identity_number": {
+                            "type": "string"
+                        },
+                        "address": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "get-one": {
+        "type": "object",
+        "description": "A user account.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "identity_number": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

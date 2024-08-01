@@ -1,0 +1,87 @@
+{
+    "get:identity-types": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "identity_type_name": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "post:identity-type": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "identity_type_name": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "post:identity-type:validation": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string",
+                "description": "kind of error validation, as following\n\n1. `identity_type_name` is required"
+            }
+        }
+    },
+    "post:identity-type:bad-request": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string",
+                "example": "The identity_type_name already exists"
+            }
+        }
+    },
+    "delete:identity-type:bad-request": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string",
+                "description": "kind of bad request, as following:\n\n1. The data is being used by another table\n\n2. Record to delete does not exist."
+            }
+        }
+    }
+}

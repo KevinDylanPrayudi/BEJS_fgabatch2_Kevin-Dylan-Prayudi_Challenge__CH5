@@ -103,7 +103,7 @@ async function profiles() {
     data: [
       {
         user_id: "1495c7ff-3eb4-4944-86f6-124ce7d1c365",
-        identity_type_id: 2,
+        identity_type_id: 1,
         identity_number: "123456789",
         address: "123 Main St"
       },

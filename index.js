@@ -12,6 +12,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 
+app.use('/public', express.static('public'))
+
 app.use(router(express.Router(), db));
 
 app.listen(port, () => {

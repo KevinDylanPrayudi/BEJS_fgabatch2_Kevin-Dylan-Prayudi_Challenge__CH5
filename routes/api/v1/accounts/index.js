@@ -4,6 +4,28 @@ const model = require('./model');
 const { validator } = require('./validator')
 
 function main(db) {
+
+    /**
+    * @swagger
+    * /accounts:
+    *   get:
+    *     security:
+    *       - bearerAuth: []
+    *     tags:
+    *      - Accounts
+    *     responses:
+    *       200:
+    *         content:
+    *           application/json:
+    *             schema:
+    *               $ref: 'http://localhost:3000/public/json/responses/accounts.json#/get-all'
+    *       401:
+    *         content:
+    *           application/json:
+    *             schema:
+    *               $ref: '#/components/responses/UnauthorizedError'
+    *      
+    */
     async function get(req, res) {
         let result = await model(db).get();
 
@@ -12,14 +34,54 @@ function main(db) {
                 message: 'Data accounts is empty'
             }
         }
-        
+
         res.status(200).json({
             status: "success",
             message: "data accounts successfully loaded",
             data: result
         });
     }
-    
+
+    /**
+    * @swagger
+    * /account:
+    *   post:
+    *     security:
+    *       - bearerAuth: []
+    *     tags:
+    *      - Accounts
+    *     requestBody:
+    *       required: true
+    *       content:
+    *         application/json:
+    *           schema:
+    *             $ref: 'http://localhost:3000/public/json/requests/accounts.json#/post'
+    *     responses:
+    *       201:
+    *         content:
+    *           application/json:
+    *             schema:
+    *               $ref: 'http://localhost:3000/public/json/responses/accounts.json#/post'
+    *       400:
+    *         content:
+    *           application/json:
+    *             schema:
+    *               type: object
+    *               properties:
+    *                 status:
+    *                   type: string
+    *                   description: A identifier success or fail
+    *                 message:
+    *                   type: string
+    *                   description: A message for response
+    *       401:
+    *         content:
+    *           application/json:
+    *             schema:
+    *               $ref: '#/components/responses/UnauthorizedError'
+    *      
+    */
+
     async function post(req, res) {
         try {
             await validator().post().validateAsync(req.body)
@@ -32,7 +94,7 @@ function main(db) {
                 data: result
             });
         } catch (err) {
-            if(err.isJoi) return res.status(400).send(err.details[0].message);
+            if (err.isJoi) return res.status(400).send(err.details[0].message);
             if (err instanceof Prisma.PrismaClientKnownRequestError) {
                 if (err.code === 'P2003') {
                     return res.status(400).json({
@@ -51,6 +113,52 @@ function main(db) {
             })
         }
     }
+
+    /**
+    * @swagger
+    * /account/{id}:
+    *   put:
+    *     security:
+    *       - bearerAuth: []
+    *     tags:
+    *      - Accounts
+    *     parameters:
+    *       - in: path
+    *         name: id
+    *         required: true
+    *         description: Numeric ID of the account
+    *         schema:
+    *           type: string
+    *     requestBody:
+    *       required: true
+    *       content:
+    *         application/json:
+    *           schema:
+    *             $ref: 'http://localhost:3000/public/json/requests/accounts.json#/put'
+    *     responses:
+    *       202:
+    *         content:
+    *           application/json:
+    *             schema:
+    *               $ref: 'http://localhost:3000/public/json/responses/accounts.json#/put'
+    *       400:
+    *         content:
+    *           application/json:
+    *             schema:
+    *               type: object
+    *               properties:
+    *                 status:
+    *                   type: string
+    *                   description: A identifier success or fail
+    *                 message:
+    *                   type: string
+    *                   description: A message for response
+    *       401:
+    *         content:
+    *           application/json:
+    *             schema:
+    *               $ref: '#/components/responses/UnauthorizedError'
+    */
     
     async function put(req, res) {
         try {
@@ -64,7 +172,7 @@ function main(db) {
                 data: result
             });
         } catch (err) {
-            if(err.isJoi) return res.status(400).json({
+            if (err.isJoi) return res.status(400).json({
                 status: "fail",
                 message: err.details[0].message
             });
@@ -75,7 +183,7 @@ function main(db) {
                         message: `The ${err.meta.field_name} doesn't exists in other table.`,
                     });
                 }
-                
+
                 return res.status(400).json({
                     status: "fail",
                     message: err.meta.cause
@@ -87,14 +195,51 @@ function main(db) {
             })
         }
     }
-    
+
+    /**
+     * @swagger
+     * /account/{id}:
+     *   delete:
+     *     security:
+     *       - bearerAuth: []
+     *     tags:
+     *      - Accounts
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         required: true
+     *         description: account ID
+     *         schema:
+     *           type: string
+     *     responses:
+     *       204:
+     *         description: Delete an account
+     *       400:
+     *         content:
+     *           application/json:
+     *             schema:
+     *              type: object
+     *              properties:
+     *                 status:
+     *                   type: string
+     *                   description: A identifier success or fail
+     *                 message:
+     *                   type: string
+     *                   description: A message for response
+     *       401:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/responses/UnauthorizedError'
+     */
+
     async function remove(req, res) {
         try {
             result = await model(db).remove(req.params.id);
 
             res.sendStatus(204);
         } catch (err) {
-            if(err instanceof Prisma.PrismaClientKnownRequestError) return res.status(400).json({
+            if (err instanceof Prisma.PrismaClientKnownRequestError) return res.status(400).json({
                 status: "fail",
                 message: err.meta.cause
             });
@@ -105,6 +250,48 @@ function main(db) {
         }
     }
 
+    /**
+     * @swagger
+     * /account/{id}:
+     *   get:
+     *     security:
+     *       - bearerAuth: []
+     *     tags:
+     *      - Accounts
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         required: true
+     *         description: Account ID
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         description: Get an account. please check the Schema tab for more details kind of response
+     *         content:
+     *           application/json:
+     *             schema:
+     *               oneOf:
+     *                   - $ref: 'http://localhost:3000/public/json/responses/accounts.json#/get-one'
+     *                   - $ref: 'http://localhost:3000/public/json/responses/accounts.json#/get:not-found'
+     *       400:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 status:
+     *                   type: string
+     *                   description: A identifier success or fail
+     *                 message:
+     *                   type: string
+     *                   description: A message for response
+     *       401:
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/responses/UnauthorizedError'
+     */
     async function getOne(req, res) {
         try {
             let result = await model(db).getOne(req.params.id);
@@ -121,7 +308,7 @@ function main(db) {
                 data: result
             });
         } catch (err) {
-            if(err instanceof Prisma.PrismaClientKnownRequestError) return res.status(400).json({
+            if (err instanceof Prisma.PrismaClientKnownRequestError) return res.status(400).json({
                 status: "fail",
                 message: err.meta.cause
             });

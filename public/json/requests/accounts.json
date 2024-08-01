@@ -1,0 +1,39 @@
+{
+    "post": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["user_id", "bank_name", "bank_account_number", "balance"],
+        "properties": {
+            "user_id": {
+                "type": "string"
+            },
+            "bank_name": {
+                "type": "string"
+            },
+            "bank_account_number": {
+                "type": "string"
+            },
+            "balance": {
+                "type": "number"
+            }
+        }
+    },
+    "put": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+            "user_id": {
+                "type": "string"
+            },
+            "bank_name": {
+                "type": "string"
+            },
+            "bank_account_number": {
+                "type": "string"
+            },
+            "balance": {
+                "type": "number"
+            }
+        }
+    }
+}

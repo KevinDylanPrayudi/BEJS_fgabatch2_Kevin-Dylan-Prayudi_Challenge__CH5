@@ -1,0 +1,167 @@
+{
+    "get-all": {
+        "type": "object",
+        "description": "A user account.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "array",
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "address": {
+                                "type": "string"
+                            },
+                            "identity_type_name": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "get-one": {
+        "type": "object",
+        "description": "A user account.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "identity_type_name": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "post": {
+        "type": "object",
+        "description": "A user account.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "profile": {
+                        "type": "object",
+                        "properties": {
+                            "identity_number": {
+                                "type": "string"
+                            },
+                            "address": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "get:not-found": {
+        "type": "object",
+        "description": "User not found.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "put": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "string",
+                "description": "The unique identifier for a user."
+            },
+            "name": {
+                "type": "string",
+                "description": "The name of the user."
+            },
+            "email": {
+                "type": "string",
+                "description": "The email address of the user."
+            },
+            "profile": {
+                "type": "object",
+                "properties": {
+                    "identity_number": {
+                        "type": "string",
+                        "description": "The identity number of the user."
+                    },
+                    "address": {
+                        "type": "string",
+                        "description": "The address of the user."
+                    }
+                }
+            }
+        }
+    }
+}
