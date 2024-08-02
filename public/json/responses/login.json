@@ -1,0 +1,52 @@
+{
+    "post:login": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "post:login:validation": {
+        "type": "object",
+        "description": "Validation response.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string",
+                "description": "kind of error validation, as following\n\n1. `email` is required\n\n2. `password` is required"
+            }
+        }
+    },
+    "post:login:bad-request": {
+        "type": "object",
+        "description": "Bad request response.",
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "description": "A identifier success or fail"
+            },
+            "message": {
+                "type": "string",
+                "description": "email or password is wrong"
+            }
+        }
+    }
+}
