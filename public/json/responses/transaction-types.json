@@ -17,7 +17,7 @@
                     "type": "object",
                     "properties": {
                         "id": {
-                            "type": "string"
+                            "type": "number"
                         },
                         "transaction_type_name": {
                             "type": "string"

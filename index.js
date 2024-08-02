@@ -19,3 +19,5 @@ app.use(router(express.Router(), db));
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 })
+
+module.exports = app
