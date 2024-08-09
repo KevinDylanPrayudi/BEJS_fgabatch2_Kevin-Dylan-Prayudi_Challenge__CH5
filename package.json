@@ -23,8 +23,7 @@
       "/coverage/",
       "/db/",
       "/public/",
-      "/middlewares/",
-      "/tests/api.*.js"
+      "/middlewares/"
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",

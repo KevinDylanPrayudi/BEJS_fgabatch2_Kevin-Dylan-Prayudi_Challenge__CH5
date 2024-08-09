@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/12</span>
+                <span class='fraction'>10/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>2/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/12</span>
+                <span class='fraction'>10/12</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -100,25 +100,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const bcrypt = require('bcrypt');
@@ -127,27 +127,27 @@ require('dotenv').config()
 &nbsp;
 &nbsp;
 &nbsp;
-function <span class="fstat-no" title="function not covered" >main(</span>db) {
-    async function <span class="fstat-no" title="function not covered" >post(</span>data) {
-        const result = <span class="cstat-no" title="statement not covered" >await db.users.findUnique({</span>
+function main(db) {
+    async function post(data) {
+        const result = await db.users.findUnique({
             where: {
                 email: data.email
             }
         });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (result === null) {</span>
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (result === null) {
 <span class="cstat-no" title="statement not covered" >            return null</span>
         }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (await bcrypt.compare(data.password, result.password)) {</span>
-            const token = <span class="cstat-no" title="statement not covered" >jwt.sign({ email: result.email }, process.env.SECRET, { expiresIn: "1d" });</span>
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (await bcrypt.compare(data.password, result.password)) {
+            const token = jwt.sign({ email: result.email }, process.env.SECRET, { expiresIn: "1d" });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            return { token}</span>
+            return { token}
         }
 <span class="cstat-no" title="statement not covered" >        return null</span>
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return { post }</span>
+    return { post }
 }
 &nbsp;
 module.exports = main</pre></td></tr></table></pre>
@@ -157,7 +157,7 @@ module.exports = main</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-06T03:26:28.428Z
+                at 2024-08-09T11:44:41.915Z
             </div>
         <script src="../../../../../../prettify.js"></script>
         <script>
