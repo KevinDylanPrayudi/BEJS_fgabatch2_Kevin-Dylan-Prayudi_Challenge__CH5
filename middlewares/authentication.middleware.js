@@ -24,4 +24,24 @@ passport.use(new JwtStrategy(opts, async function(jwt_payload, done) {
     return done(null, result);
 }));
 
-module.exports = passport;
+function authenticateJwt(req, res, next) {
+    passport.authenticate('jwt', function(err, user, info) {
+      if(err) {
+        return req.status(401).json({
+          status: 'fail',
+          message: 'jwt is not valid'
+        })
+      }
+      
+      if (!user) {
+        return res.status(401).json({
+          status: 'fail',
+          message: `${info.message}`
+        });
+      }
+      req.user = user;
+      next();
+    })(req, res, next);
+  }
+
+module.exports = authenticateJwt;

@@ -5,8 +5,6 @@ const { execSync } = require('child_process');
 
 
 const app = require('../index');
-const { strict } = require('assert');
-const { format } = require('path');
 
 const ajv = new Ajv()
 const base_url = '/api/v1'
@@ -1411,8 +1409,6 @@ describe('transaction', () => {
             .auth(token, { type: 'bearer' })
             .expect('Content-Type', /json/)
             .expect(200)
-
-            console.log(transfer_id)
             
         expect(validate(res.body)).toBeTruthy();
     })

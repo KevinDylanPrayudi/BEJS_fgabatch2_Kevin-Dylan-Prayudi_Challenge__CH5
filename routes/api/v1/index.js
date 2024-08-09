@@ -9,7 +9,10 @@ const profiles = require('./profiles');
 const transactionTypes = require('./transaction-types');
 
 const AUTHENTICATION = require('../../../middlewares/authentication.middleware');
-const AUTHORIZATION = require('../../../middlewares/authorization.middleware');
+const {
+  isAdmin,
+  authorization
+} = require('../../../middlewares/authorization.middleware');
 const { response } = require('express');
 
 
@@ -75,22 +78,25 @@ function main(db) {
 
   router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 
-  router.use(AUTHENTICATION.authenticate('jwt', { session: false }));
-
+  router.use(AUTHENTICATION)
+  
+  router.use('/user/:id', authorization().user);
   router.get('/user/:id', users(db).getOne);
   router.put('/user/:id', users(db).put);
   router.delete('/user/:id', users(db).remove);
 
-  router.get('/account/:id', accounts(db).getOne);
   router.post('/account', accounts(db).post);
+  router.use('/account/:id', authorization().account);
+  router.get('/account/:id', accounts(db).getOne);
   router.put('/account/:id', accounts(db).put);
   router.delete('/account/:id', accounts(db).remove);
 
+  router.use('/profile/:id', authorization().profile);
   router.get('/profile/:id', profiles(db).getOne);
 
   router.use('/transactions', require('./transactions')(db));
 
-  router.use(AUTHORIZATION);
+  router.use(isAdmin);
 
   router.get('/identity-types', identityTypes(db).get);
   router.post('/identity-type', identityTypes(db).post);

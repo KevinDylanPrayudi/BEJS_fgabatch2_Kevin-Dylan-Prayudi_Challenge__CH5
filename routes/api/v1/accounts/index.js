@@ -29,7 +29,7 @@ function main(db) {
     async function get(req, res) {
         let result = await model(db).get();
 
-        if (result === null) {
+        if (result.length === 0) {
             result = {
                 message: 'Data accounts is empty'
             }
@@ -94,7 +94,10 @@ function main(db) {
                 data: result
             });
         } catch (err) {
-            if (err.isJoi) return res.status(400).send(err.details[0].message);
+            if (err.isJoi) return res.status(400).json({
+                status: "fail",
+                message: err.details[0].message
+            });
             if (err instanceof Prisma.PrismaClientKnownRequestError) {
                 if (err.code === 'P2003') {
                     return res.status(400).json({
@@ -159,7 +162,7 @@ function main(db) {
     *             schema:
     *               $ref: '#/components/responses/UnauthorizedError'
     */
-    
+
     async function put(req, res) {
         try {
             await validator().put().validateAsync(req.body);
@@ -308,10 +311,6 @@ function main(db) {
                 data: result
             });
         } catch (err) {
-            if (err instanceof Prisma.PrismaClientKnownRequestError) return res.status(400).json({
-                status: "fail",
-                message: err.meta.cause
-            });
             res.status(500).json({
                 status: "fail",
                 message: err.message

@@ -6,10 +6,35 @@
   "scripts": {
     "start:prod": "node index.js",
     "start:dev": "nodemon index.js",
-    "test": "jest --forceExit --watch"
+    "test": "jest --forceExit"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": [
+      "html",
+      "text"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/prisma/",
+      "/coverage/",
+      "/db/",
+      "/public/",
+      "/middlewares/",
+      "/tests/api.*.js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/prisma/",
+      "/coverage/",
+      "/db/",
+      "/public/",
+      "/middlewares/",
+      "\/routes(\/(\\w)*)*\/validator"
+    ]
   },
   "devDependencies": {
     "ajv": "^8.17.1",
